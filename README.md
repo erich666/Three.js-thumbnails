@@ -31,5 +31,7 @@ Yes, I thought of automating the JPEG thumbnail creation process. The problem is
 examples look a bit boring until you let it really start up or move the view. So, it was
 better to manually create the 150x100 thumbnails manually.
 
+License: [MIT License](https://en.wikipedia.org/wiki/MIT_License#License_terms)
+
 TODO: what would be better is to read the directories and read the files.js file, both, and
 note what's missing and what should be deleted. But, "diff" works fine for me now.
