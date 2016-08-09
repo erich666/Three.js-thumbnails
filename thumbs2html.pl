@@ -1,26 +1,46 @@
 #!/usr/bin/perl -w
+# Threejs.org examples thumbnail page creator
+#
+# Figure out the missing JPEG files and put them in the proper directories.
+#
+# Steps:
+#
+# First, do `ls -R * > jpegs.txt` (get Cygwin if you don't have ls).
+#
+# Do a "diff" (e.g., use the program Beyond Compare) between the three.js's examples/files.js
+# file and jpegs.txt. This diff will show new examples added and old examples deleted. You
+# will have to futz with "align with" to check the canvas examples and below (which rarely
+# change anyway).
+#
+# First, delete unused examples JPEGs from the directories here.
+#
+# Run each new example and create a screenshot for it, of size 150x100. Name the JPEG with
+# the naming scheme used by other files in the directory and save it to the proper place.
+#
+# Run this Perl script from the examples directory in the latest three.js distribution:
+#
+#   `perl thumbs2html.pl`
+#
+# The index.html file produced is created from the JPEGs you have.
+#
+# Yes, I thought of automating the JPEG thumbnail creation process. The problem is that many
+# examples look a bit boring until you let it really start up or move the view. So, it was
+# better to manually create the 150x100 thumbnails manually.
+#
+# TODO: what would be better is to read the directories and read the files.js file, both, and
+# note what's missing and what should be deleted. But, "diff" works fine for me now.
+
+use strict;
 
 use File::Find;
 
 my $translationFile = "index.html";
 
-my $outputTitle = "Three.js Examples";
+my $outputTitle = "Three.js Thumbnails";
 
-my $pragma='';
-my $ifndef='';
-my $ogs_include='';
-my $copyright='';
-my $codefix1='';
-my $codefix2='';
-my $codefix3='';
-my $codefix4='';
-my $codefix5='';
-my $tabs2spaces='';
-my $dupfiles='';
-my $longline='';
-my $badcharfix='';
+my $cfnum = 0;
 
-$cfnum = 0;
+my @codefiles;
 
 &HEADER();
 
@@ -28,7 +48,6 @@ my @finddir;
 $finddir[0] = ".";
 find( \&READRECURSIVEDIR, @finddir, );
 &PROCESSFILES(".");
-$cfnum = 0;
 
 &FOOTER();
 
@@ -37,7 +56,6 @@ exit 0 ;
 sub READRECURSIVEDIR
 {
 	if ( m/\.(jpg)$/ ) {
-	# to check shaders, too: if ( m/\.(cpp|h|cs|cgfx|fx|fxh|ogsfx|ogsfh)$/ ) {
 		$codefiles[$cfnum] = $File::Find::name;
 		$cfnum++;
 	}
@@ -62,7 +80,7 @@ EOF
 
 		printf TRANSLATE "<h1>$outputTitle</h1>\n";
 		print TRANSLATE "Thumbnails for <a href=\"http://threejs.org/examples/\">three.js examples</a>\n";
-		print TRANSLATE "<div id=\"examples\">\n";
+		print TRANSLATE "<div id=\"thumbnails\">\n";
 }
 
 sub PROCESSFILES
@@ -72,13 +90,12 @@ sub PROCESSFILES
 
 	#my $addpath = shift(@_);
 
-	#  make include file translation file
 	my @dirnames = ("webgl", "webgl_advanced", "webvr", "css3d", "css3d_stereo", "misc", "canvas", "raytracing", "software", "svg");
 	foreach my $n (@dirnames) {
 		my $write_dir = 1;
 		for ( $i = 0 ; $i < $cfnum ; $i++ ) {
 			@fld = split('/',$codefiles[$i]);	# split
-			$nextfile = $fld[$#fld];
+			my $nextfile = $fld[$#fld];
 
 			if ( $codefiles[$i] =~ ($n . "/") && lc($nextfile) =~ /\.jpg/ ) {
 				my $fname = $`;
@@ -110,7 +127,7 @@ sub FOOTER
 <P>
 Go to the <b><a href="http://www.realtimerendering.com/webgl.html">WebGL/three.js resources page</a></b>.
 <P>
-<I>Last updated April 20, 2016</I>
+<I>Last updated July 9, 2016</I>
 </span>
 </body></html>
 EOF
