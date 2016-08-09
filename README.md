@@ -1,4 +1,4 @@
-Threejs.org examples Thumbnail Page Creator
+Threejs.org examples thumbnail page project
 ===========================================
 
 The results of this script is **[here](http://www.realtimerendering.com/threejs/)**, linked from [here](http://www.realtimerendering.com/webgl.html).
