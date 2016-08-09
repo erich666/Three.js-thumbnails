@@ -1,11 +1,15 @@
-Threejs.org examples thumbnail page creator
+Threejs.org examples Thumbnail Page Creator
 ===========================================
 
-Figure out the missing JPEG files and put them in the proper directories.
+The results of this script is **[here](http://www.realtimerendering.com/threejs/)**, linked from [here](http://www.realtimerendering.com/webgl.html).
+
+The thumbs2html.pl file makes the thumbnails index page.
+
+You, however, need to figure out the missing JPEG files and put them in the proper directories for it to work properly.
 
 Steps:
 
-First, do `ls -R * > jpegs.txt` (get Cygwin if you don't have ls).
+First, do `ls -R * > jpegs.txt` (get [Cygwin](https://www.cygwin.com/) if you don't have ls).
 
 Do a "diff" (e.g., use the program Beyond Compare) between the three.js's examples/files.js
 file and jpegs.txt. This diff will show new examples added and old examples deleted. You
