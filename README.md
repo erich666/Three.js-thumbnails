@@ -3,6 +3,8 @@ Threejs.org examples thumbnail page project
 
 The results of this script is **[here](http://www.realtimerendering.com/threejs/)**, linked from [here](http://www.realtimerendering.com/webgl.html).
 
+Note: some of the examples may not exist, either because three.js has removed them, or the demos are in the develop branch and not yet in the master.
+
 The thumbs2html.pl file makes the thumbnails index page.
 
 You, however, need to figure out the missing JPEG files and put them in the proper directories for it to work properly.
